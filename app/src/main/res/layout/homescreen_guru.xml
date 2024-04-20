@@ -102,6 +102,8 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/button_mutabaah"
+            android:clickable="true"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

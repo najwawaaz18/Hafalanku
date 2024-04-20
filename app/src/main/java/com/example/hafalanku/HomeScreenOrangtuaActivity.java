@@ -11,18 +11,27 @@ import androidx.cardview.widget.CardView;
 
 public class HomeScreenOrangtuaActivity extends AppCompatActivity {
 
-    CardView mutabaahCard;
+    CardView mutabaahCard, konsultasiCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_ortu);
 
         mutabaahCard = findViewById(R.id.button_mutabaah);
+        konsultasiCard = findViewById(R.id.button_konsultasi);
 
         mutabaahCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeScreenOrangtuaActivity.this, UnggahVideoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        konsultasiCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeScreenOrangtuaActivity.this, KonsultasiActivity.class);
                 startActivity(intent);
             }
         });
