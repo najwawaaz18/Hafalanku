@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "263820365718",
+    "project_id": "hafalanku-c0546",
+    "storage_bucket": "hafalanku-c0546.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263820365718:android:8813e813aa408d89c797b7",
+        "android_client_info": {
+          "package_name": "com.example.hafalanku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9z_TLXobyNXrDSerDpq_7K38HvinnsWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

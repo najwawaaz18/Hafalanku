@@ -65,4 +65,8 @@
     <string name="konsultasi_text">Diskusi dengan pengajar dapat dilakukan melalui WhatsApp.</string>
     <string name="unggah_video">Unggah Video</string>
     <string name="unggah_video_text">Siswa/siswi yang belum lulus dapat mengunggah video hafalan.</string>
+    <string name="pilih_nama_siswa">Pilih Nama Siswa</string>
+    <string name="pilih_surat">Pilih Surat</string>
+    <string name="pilih_juz">Pilih Juz</string>
+    <string name="selesai">SELESAI</string>
 </resources>
