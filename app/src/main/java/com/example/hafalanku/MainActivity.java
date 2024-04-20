@@ -30,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
         textViewAbout = findViewById(R.id.menuAbout);
 
         FirebaseDatabase database;
-        database =  FirebaseDatabase.getInstance();
-
-        if (database == null) {
-            Log.d("FirebaseInit", "Failed to initialize Firebase Database");
-        } else {
-            database.setPersistenceEnabled(true);
-            Log.d("FirebaseInit", "Firebase Database initialized successfully");
-        }
+//        database =  FirebaseDatabase.getInstance("https://console.firebase.google.com/u/1/project/hafalanku-c0546/database/hafalanku-c0546-default-rtdb/data/~2F");
+//
+//        if (database == null) {
+//            Log.d("FirebaseInit", "Failed to initialize Firebase Database");
+//        } else {
+//            database.setPersistenceEnabled(true);
+//            Log.d("FirebaseInit", "Firebase Database initialized successfully");
+//        }
         buttonLoginGuru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

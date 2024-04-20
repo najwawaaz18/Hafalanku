@@ -32,6 +32,8 @@
             android:name=".HomeScreenOrangtuaActivity" />
         <activity
             android:name=".BaseConfiguration" />
+        <activity
+            android:name=".UnggahVideoActivity" />
     </application>
 
 </manifest>
