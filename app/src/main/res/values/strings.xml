@@ -69,4 +69,5 @@
     <string name="pilih_surat">Pilih Surat</string>
     <string name="pilih_juz">Pilih Juz</string>
     <string name="selesai">SELESAI</string>
+    <string name="alt_judul_video">ALT = Judul Video</string>
 </resources>

@@ -1,43 +1,44 @@
 package com.example.hafalanku;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import com.squareup.picasso.Picasso;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class VideoAdapter  {
+public class VideoAdapter extends ArrayAdapter<VideoItem> {
+    private Context context;
+    private List<VideoItem> videoList;
 
-//    private List<Video> videos;
-//    private List<String> titles;
-//
-//    public VideoAdapter(List<Video> videos, List<String> titles) {
-//        this.videos = videos;
-//        this.titles = titles;
-//    }
-//
-//    @Override
-//    public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item_layout, parent, false);
-//        return new VideoViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(VideoViewHolder holder, int position) {
-//        Video video = videos.get(position);
-//        String title = titles.get(position);
-//
-//        // Load and display video thumbnail (see step 4)
-//        holder.videoTitle.setText(title);
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return videos.size();
-//    }
+    public VideoAdapter(Context context, List<VideoItem> videoList) {
+        super(context, 0, videoList);
+        this.context = context;
+        this.videoList = videoList;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.grid_item, null);
+        }
+
+        ImageView imageView = view.findViewById(R.id.grid_image);
+        TextView textView = view.findViewById(R.id.item_name);
+
+        Glide.with(context)
+                .load(videoList.get(position).getVideoUrl())
+                .into(imageView);
+
+        textView.setText(videoList.get(position).getVideoTitle());
+
+        return view;
+    }
 }

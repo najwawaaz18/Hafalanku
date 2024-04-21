@@ -35,7 +35,7 @@
         <activity
             android:name=".UnggahVideoActivity" />
         <activity
-            android:name=".VideoActivity" />
+            android:name=".MutabaahVideoActivity" />
         <activity
             android:name=".KonsultasiActivity" />
     </application>
