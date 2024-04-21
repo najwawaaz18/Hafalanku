@@ -38,6 +38,8 @@
             android:name=".MutabaahVideoActivity" />
         <activity
             android:name=".KonsultasiActivity" />
+        <activity
+            android:name=".SetoranSiswaActivity" />
     </application>
 
 </manifest>

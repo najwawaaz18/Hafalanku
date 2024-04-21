@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView;
 
 public class HomeScreenGuruActivity extends AppCompatActivity {
 
-    CardView mutabaahCard;
+    CardView mutabaahCard, setoranCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,16 @@ public class HomeScreenGuruActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeScreenGuruActivity.this, MutabaahVideoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        setoranCard = findViewById(R.id.button_setoran);
+
+        setoranCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeScreenGuruActivity.this, SetoranSiswaActivity.class);
                 startActivity(intent);
             }
         });
