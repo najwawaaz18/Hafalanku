@@ -68,6 +68,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/button_setoran"
             android:clickable="true"
+            android:focusable="true"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -106,6 +107,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/button_mutabaah"
             android:clickable="true"
+            android:focusable="true"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -144,6 +146,9 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/button_penilaian"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"

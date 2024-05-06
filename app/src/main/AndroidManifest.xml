@@ -40,6 +40,12 @@
             android:name=".KonsultasiActivity" />
         <activity
             android:name=".SetoranSiswaActivity" />
+        <activity
+            android:name=".PenilaianAllActivity" />
+        <activity
+            android:name=".OrtuViewHafalanActivity" />
+        <activity
+            android:name=".PenilaianIndividuActivity" />
     </application>
 
 </manifest>

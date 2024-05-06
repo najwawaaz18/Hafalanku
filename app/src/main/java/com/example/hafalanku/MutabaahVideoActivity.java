@@ -33,7 +33,7 @@ public class MutabaahVideoActivity extends AppCompatActivity {
     }
 
     private void loadVideosFromFirebase() {
-        System.out.println("sini loh");
+//        System.out.println("sini loh");
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app");
         database.getReference("Videos").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -51,7 +51,7 @@ public class MutabaahVideoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Penanganan kesalahan pengambilan data dari Firebase
+                //
             }
         });
     }

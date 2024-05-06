@@ -144,6 +144,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/view_hafalan_card"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -155,7 +156,7 @@
         >
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="168dp"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -174,11 +175,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/inter"
                 android:text="@string/laporan_hafalan"
                 android:textColor="@color/blue"
-                android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

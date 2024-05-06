@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/data_row"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/style_nama_surah_row"
+        android:textAllCaps="true"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/crimson"
+        android:paddingVertical="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:textColor="@color/blue"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/style_status_row"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingVertical="10dp"
+        android:textColor="@color/blue"
+        android:layout_gravity="center"
+        android:fontFamily="@font/crimson"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</TableRow>

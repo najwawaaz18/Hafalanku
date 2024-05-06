@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -69,23 +70,33 @@ public class LoginActivity extends AppCompatActivity {
                             System.out.println(userid);
                             if (retrievedUserId != null && retrievedUserId == Long.parseLong(userid)) {
                                     if ("guru".equalsIgnoreCase(userType)) {
+                                        SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString("userid", userid);
+                                        editor.putString("username", username);
+                                        editor.apply();
+                                        Toast toast = Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT);
+                                        toast.show();
                                         Intent intent = new Intent(LoginActivity.this, HomeScreenGuruActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
                                         SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                                         SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString("userid", userid);
                                         editor.putString("username", username);
                                         editor.apply();
+                                        Toast toast = Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT);
+                                        toast.show();
                                         Intent intent = new Intent(LoginActivity.this, HomeScreenOrangtuaActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                 } else {
-                                    Log.d("LoginActivity", "Invalid userid!");
+                                    Log.d("LoginActivity", "Wrong username.");
                                 }
                             } else {
-                                Log.d("LoginActivity", "User not found!");
+                                Log.d("LoginActivity", "Wrong username or password.");
                             }
                         }
 

@@ -71,4 +71,12 @@
     <string name="selesai">SELESAI</string>
     <string name="kosong"></string>
     <string name="alt_judul_video">ALT = Judul Video</string>
+    <string name="catatan_hafalan_juz_29">Catatan Hafalan Juz 29</string>
+    <string name="no">No.</string>
+    <string name="nomor_induk_siswa">Nomor Induk Siswa</string>
+    <string name="nama_siswa">Nama Siswa</string>
+    <string name="nama_siswa_label">Nama Siswa:</string>
+    <string name="nama_surat">Nama Surat</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="status">Status:</string>
 </resources>

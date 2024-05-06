@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 
 public class HomeScreenOrangtuaActivity extends AppCompatActivity {
 
-    CardView mutabaahCard, konsultasiCard;
+    CardView mutabaahCard, konsultasiCard, viewHafalanCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ public class HomeScreenOrangtuaActivity extends AppCompatActivity {
 
         mutabaahCard = findViewById(R.id.button_mutabaah);
         konsultasiCard = findViewById(R.id.button_konsultasi);
+        viewHafalanCard = findViewById(R.id.view_hafalan_card);
 
         mutabaahCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +33,14 @@ public class HomeScreenOrangtuaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeScreenOrangtuaActivity.this, KonsultasiActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewHafalanCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeScreenOrangtuaActivity.this, OrtuViewHafalanActivity.class);
                 startActivity(intent);
             }
         });
