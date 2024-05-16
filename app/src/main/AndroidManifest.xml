@@ -46,6 +46,8 @@
             android:name=".OrtuViewHafalanActivity" />
         <activity
             android:name=".PenilaianIndividuActivity" />
+        <activity
+            android:name=".VideoPlaybackActivity" />
     </application>
 
 </manifest>

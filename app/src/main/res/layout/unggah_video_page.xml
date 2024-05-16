@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="100dp"
+        android:paddingHorizontal="50dp"
         app:flow_horizontalAlign="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,14 +42,14 @@
 
         <TextView
             android:id="@+id/konsultasi_text"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:text="@string/unggah_video_text"
             android:textColor="@color/blue"
             android:fontFamily="@font/inter"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <com.google.android.material.button.MaterialButton
@@ -63,7 +63,7 @@
             android:text="@string/unggah_video"
             android:fontFamily="@font/inter"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="20sp"
             app:icon="@drawable/video_icon"
             app:cornerRadius="50dp" />
 

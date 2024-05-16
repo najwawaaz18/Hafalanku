@@ -93,10 +93,14 @@ public class LoginActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 } else {
-                                    Log.d("LoginActivity", "Wrong username.");
+//                                    Log.d("LoginActivity", "Wrong username.");
+                                    Toast toast = Toast.makeText(LoginActivity.this, "Wrong password.", Toast.LENGTH_SHORT);
+                                    toast.show();
                                 }
                             } else {
-                                Log.d("LoginActivity", "Wrong username or password.");
+//                                Log.d("LoginActivity", "Wrong username or password.");
+                                Toast toast = Toast.makeText(LoginActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }
 
