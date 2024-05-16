@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("userid", userid);
                                         editor.putString("username", username);
                                         editor.apply();
-                                        Toast toast = Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(LoginActivity.this, "Berhasil login!", Toast.LENGTH_SHORT);
                                         toast.show();
                                         Intent intent = new Intent(LoginActivity.this, HomeScreenGuruActivity.class);
                                         startActivity(intent);
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("userid", userid);
                                         editor.putString("username", username);
                                         editor.apply();
-                                        Toast toast = Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(LoginActivity.this, "Berhasil login!", Toast.LENGTH_SHORT);
                                         toast.show();
                                         Intent intent = new Intent(LoginActivity.this, HomeScreenOrangtuaActivity.class);
                                         startActivity(intent);
@@ -94,12 +94,12 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
 //                                    Log.d("LoginActivity", "Wrong username.");
-                                    Toast toast = Toast.makeText(LoginActivity.this, "Wrong password.", Toast.LENGTH_SHORT);
+                                    Toast toast = Toast.makeText(LoginActivity.this, "Password yang Anda masukkan salah.", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                             } else {
 //                                Log.d("LoginActivity", "Wrong username or password.");
-                                Toast toast = Toast.makeText(LoginActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(LoginActivity.this, "Username atau password salah.", Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         }

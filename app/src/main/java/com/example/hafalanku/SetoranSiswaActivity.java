@@ -130,7 +130,7 @@ public class SetoranSiswaActivity extends AppCompatActivity {
         hafalanRef.child("nama").setValue(selectedStudentName);
         hafalanRef.child("status_hafalan").child(selectedSurah).setValue(statusHafalan);
 
-        Toast toast = Toast.makeText(SetoranSiswaActivity.this, "Data added successfully!", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(SetoranSiswaActivity.this, "Berhasil menambahkan data setoran hafalan!", Toast.LENGTH_SHORT);
         toast.show();
         Intent intent = new Intent(SetoranSiswaActivity.this, HomeScreenGuruActivity.class);
         startActivity(intent);

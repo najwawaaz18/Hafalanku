@@ -111,16 +111,16 @@ public class UnggahVideoActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.hasChild(username)) {
                                     userRef.child(username).child(videoId).setValue(videoData);
-                                    Toast.makeText(UnggahVideoActivity.this, "Video uploaded successfully!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UnggahVideoActivity.this, "Berhasil mengunggah video!", Toast.LENGTH_SHORT).show();
                                 } else {
                                     userRef.child(username).setValue(username, new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                             if (error == null) {
                                                 userRef.child(username).child(videoId).setValue(videoData);
-                                                Toast.makeText(UnggahVideoActivity.this, "Video uploaded successfully!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(UnggahVideoActivity.this, "Berhasil mengunggah video!", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Toast.makeText(UnggahVideoActivity.this, "Failed to upload your video.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(UnggahVideoActivity.this, "Gagal mengunggah video.", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -129,14 +129,14 @@ public class UnggahVideoActivity extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(UnggahVideoActivity.this, "Failed to uploade your video", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UnggahVideoActivity.this, "Gagal mengunggah video.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UnggahVideoActivity.this, "Failed to uploade your video.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UnggahVideoActivity.this, "Gagal mengunggah video.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -144,7 +144,7 @@ public class UnggahVideoActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                Toast.makeText(UnggahVideoActivity.this, "Failed to uploade your video.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UnggahVideoActivity.this, "Gagal mengunggah video.", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -112,13 +112,13 @@ public class MutabaahVideoActivity extends AppCompatActivity {
                     if (task1.isSuccessful()) {
                         videoList.remove(position);
                         adapter.notifyDataSetChanged();
-                        Toast.makeText(MutabaahVideoActivity.this, "Video deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MutabaahVideoActivity.this, "Video berhasil dihapus.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MutabaahVideoActivity.this, "Failed to delete video from database", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MutabaahVideoActivity.this, "Gagal menghapus video.", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                Toast.makeText(MutabaahVideoActivity.this, "Failed to delete video from storage", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MutabaahVideoActivity.this, "Gagal menghapus video.", Toast.LENGTH_SHORT).show();
             }
         });
     }

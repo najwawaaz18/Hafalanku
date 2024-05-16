@@ -127,7 +127,7 @@ public class PenilaianIndividuActivity extends AppCompatActivity {
                 statusTextView.setText(isChecked ? "Lulus" : "Tidak Lulus");
                 updateStatusHafalan(nama_surah, isChecked ? "Lulus" : "Tidak Lulus");
 
-                Toast toast = Toast.makeText(PenilaianIndividuActivity.this, "Data updated successfully!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(PenilaianIndividuActivity.this, "Berhasil mengubah status hafalan!", Toast.LENGTH_LONG);
                 toast.show();
             }
         });
