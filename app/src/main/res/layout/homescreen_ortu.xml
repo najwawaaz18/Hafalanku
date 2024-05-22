@@ -18,6 +18,7 @@
 
     <ImageView
         android:id="@+id/profile_icon"
+        android:clickable="true"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
@@ -26,7 +27,8 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/profile_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/homePic"

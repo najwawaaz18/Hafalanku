@@ -48,6 +48,8 @@
             android:name=".PenilaianIndividuActivity" />
         <activity
             android:name=".VideoPlaybackActivity" />
+        <activity
+            android:name=".ProfileActivity" />
     </application>
 
 </manifest>

@@ -1,10 +1,12 @@
 package com.example.hafalanku;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -31,11 +33,21 @@ public class OrtuViewHafalanActivity extends AppCompatActivity {
     private TextView nameTextView;
     private List<String> namaSurahList;
     private HashMap<String, String> hafalanMap;
+    ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ortu_view_hafalan_siswa);
+
+        profileIcon = findViewById(R.id.profile_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrtuViewHafalanActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         username = preferences.getString("username", "");

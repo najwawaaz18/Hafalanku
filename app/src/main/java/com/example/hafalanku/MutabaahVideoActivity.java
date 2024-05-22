@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class MutabaahVideoActivity extends AppCompatActivity {
 
     private List<VideoItem> videoList;
     private VideoAdapter adapter;
+    ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,15 @@ public class MutabaahVideoActivity extends AppCompatActivity {
         videoList = new ArrayList<>();
         adapter = new VideoAdapter(this, videoList);
         gridView.setAdapter(adapter);
+
+        profileIcon = findViewById(R.id.profile_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MutabaahVideoActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

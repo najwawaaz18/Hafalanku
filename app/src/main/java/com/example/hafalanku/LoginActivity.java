@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("userid", userid);
                                         editor.putString("username", username);
+                                        editor.putString("usertype", userType);
                                         editor.apply();
                                         Toast toast = Toast.makeText(LoginActivity.this, "Berhasil login!", Toast.LENGTH_SHORT);
                                         toast.show();
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("userid", userid);
                                         editor.putString("username", username);
+                                        editor.putString("usertype", userType);
                                         editor.apply();
                                         Toast toast = Toast.makeText(LoginActivity.this, "Berhasil login!", Toast.LENGTH_SHORT);
                                         toast.show();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,11 +22,21 @@ import com.google.firebase.database.ValueEventListener;
 public class PenilaianAllActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
+    ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.penilaian_all);
+
+        profileIcon = findViewById(R.id.profile_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PenilaianAllActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mDatabase = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
 

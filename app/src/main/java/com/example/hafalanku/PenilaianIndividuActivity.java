@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,11 +39,21 @@ public class PenilaianIndividuActivity extends AppCompatActivity {
     private TextView nameTextView;
     private List<String> namaSurahList;
     private HashMap<String, String> hafalanMap;
+    ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.penilaian_individu);
+
+        profileIcon = findViewById(R.id.profile_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PenilaianIndividuActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         username = intent.getStringExtra("username");

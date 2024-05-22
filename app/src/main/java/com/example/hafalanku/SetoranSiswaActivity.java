@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SetoranSiswaActivity extends AppCompatActivity {
 
@@ -27,11 +29,21 @@ public class SetoranSiswaActivity extends AppCompatActivity {
     String selectedStudentName = "";
     String selectedSurah = "";
     String selectedStudentId = "";
+    ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setoran_siswa);
+
+        profileIcon = findViewById(R.id.profile_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SetoranSiswaActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         List<String> juz_lists = new ArrayList<>();
         juz_lists.add("");
