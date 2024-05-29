@@ -80,8 +80,9 @@
     <string name="keterangan">Keterangan</string>
     <string name="status">Status:</string>
     <string name="nama_hint">Nama : </string>
-    <string name="nisn_hint">NISN :</string>
+    <string name="nisn_hint">Nomor Induk :</string>
     <string name="edit">EDIT</string>
     <string name="logout">LOGOUT</string>
     <string name="update">UPDATE</string>
+    <string name="klik_nama_siswa_untuk_melihat_catatan_hafalan_masing_masing">Klik nama siswa untuk melihat catatan hafalan masing-masing.</string>
 </resources>
