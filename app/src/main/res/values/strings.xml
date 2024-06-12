@@ -85,4 +85,7 @@
     <string name="logout">LOGOUT</string>
     <string name="update">UPDATE</string>
     <string name="klik_nama_siswa_untuk_melihat_catatan_hafalan_masing_masing">Klik nama siswa untuk melihat catatan hafalan masing-masing.</string>
+    <string name="text_klik_mutabaah">Klik nama siswa untuk melihat\nvideo hafalan masing-masing</string>
+    <string name="keterangan_waktu_uploadnya">keterangan waktu uploadnya</string>
+    <string name="surat">Surat ......</string>
 </resources>

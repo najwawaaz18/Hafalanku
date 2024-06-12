@@ -50,6 +50,8 @@
             android:name=".VideoPlaybackActivity" />
         <activity
             android:name=".ProfileActivity" />
+        <activity
+            android:name=".MutabaahAllActivity" />
     </application>
 
 </manifest>

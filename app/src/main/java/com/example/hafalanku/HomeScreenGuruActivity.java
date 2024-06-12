@@ -23,7 +23,7 @@ public class HomeScreenGuruActivity extends AppCompatActivity {
         mutabaahCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeScreenGuruActivity.this, MutabaahVideoActivity.class);
+                Intent intent = new Intent(HomeScreenGuruActivity.this, MutabaahAllActivity.class);
                 startActivity(intent);
             }
         });
