@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +56,8 @@ public class UnggahVideoActivity extends AppCompatActivity {
     private List<VideoItem> videoList;
     private IndividuVideoAdapter adapter;
     private TextView nameTextView;
+    private List<String> surahNames;
+    private List<String> surahIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class UnggahVideoActivity extends AppCompatActivity {
 
         SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         username = preferences.getString("username", "");
+        userid = preferences.getString("userid", "");
 
         String namaText = "Nama Siswa: " + username;
         nameTextView = findViewById(R.id.text_nama_siswa);
@@ -83,31 +87,30 @@ public class UnggahVideoActivity extends AppCompatActivity {
         });
 
         spinnerSurah = findViewById(R.id.surat_spinner);
-
-        DatabaseReference surahRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Surah");
-
-        surahRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> surahNames = new ArrayList<>();
-                surahNames.add("");
-
-                for (DataSnapshot surahSnapshot : dataSnapshot.getChildren()) {
-                    String namaSurah = surahSnapshot.child("nama_surah").getValue(String.class);
-
-//                    String surahText = namaSurah;
-                    surahNames.add(namaSurah);
-                }
-
-                CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(UnggahVideoActivity.this, R.layout.custom_spinner_item, surahNames, false);
-                spinnerSurah.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle error
-            }
-        });
+//        DatabaseReference surahRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Surah");
+//
+//        surahRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                List<String> surahNames = new ArrayList<>();
+//                surahNames.add("");
+//
+//                for (DataSnapshot surahSnapshot : dataSnapshot.getChildren()) {
+//                    String namaSurah = surahSnapshot.child("nama_surah").getValue(String.class);
+//
+////                    String surahText = namaSurah;
+//                    surahNames.add(namaSurah);
+//                }
+//
+//                CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(UnggahVideoActivity.this, R.layout.custom_spinner_item, surahNames, false);
+//                spinnerSurah.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Handle error
+//            }
+//        });
 
         adapter.setOnUploadClickListener(new IndividuVideoAdapter.OnUploadClickListener() {
             @Override
@@ -116,7 +119,7 @@ public class UnggahVideoActivity extends AppCompatActivity {
                 ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinnerSurah.getAdapter();
                 int positionInSpinner = spinnerAdapter.getPosition(videoItem.getVideoTitle());
                 spinnerSurah.setSelection(positionInSpinner);
-                deleteVideo(position);
+                deleteVideoToReplace(position);
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, PICK_VIDEO_CODE);
             }
@@ -145,6 +148,7 @@ public class UnggahVideoActivity extends AppCompatActivity {
         });
 
         loadVideosFromFirebase();
+        loadUserHafalanData();
     }
 
     @Override
@@ -310,6 +314,31 @@ public class UnggahVideoActivity extends AppCompatActivity {
         });
     }
 
+    private void deleteVideoToReplace(int position) {
+        VideoItem videoItem = videoList.get(position);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(videoItem.getVideoUrl());
+
+        storageRef.delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DatabaseReference videoRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app")
+                        .getReference("Videos")
+                        .child(videoItem.getVideoUserName())
+                        .child(videoItem.getVideoId());
+
+                videoRef.removeValue().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        loadVideosFromFirebase();
+                    } else {
+                        //
+                    }
+                });
+            } else {
+                //
+            }
+        });
+    }
+
     private void showDeleteConfirmationDialog(int position) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Video")
@@ -323,4 +352,32 @@ public class UnggahVideoActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void loadUserHafalanData() {
+        DatabaseReference userHafalanRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference().child("Hafalan").child(userid);
+
+        userHafalanRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> surahTidakLulus = new ArrayList<>();
+                surahTidakLulus.add("");
+                for (DataSnapshot surahSnapshot : dataSnapshot.child("status_hafalan").getChildren()) {
+                    String status = surahSnapshot.getValue(String.class);
+                    if ("Tidak Lulus".equals(status)) {
+                        String surahName = surahSnapshot.getKey();
+                        surahTidakLulus.add(surahName);
+                        Log.d("SurahTidakLulus", surahName);
+                    }
+                }
+
+                CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(UnggahVideoActivity.this, R.layout.custom_spinner_item, surahTidakLulus, false);
+                spinnerSurah.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
 }

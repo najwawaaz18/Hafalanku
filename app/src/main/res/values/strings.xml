@@ -67,6 +67,7 @@
     <string name="unggah_video_text">Siswa/siswi yang belum lulus dapat mengunggah video hafalan.</string>
     <string name="pilih_nama_siswa">Pilih Nama Siswa</string>
     <string name="pilih_surat">Pilih Surat</string>
+    <string name="pilih_surat_tidak_lulus">Pilih surat yang belum lulus</string>
     <string name="pilih_juz">Pilih Juz</string>
     <string name="selesai">SELESAI</string>
     <string name="kosong"></string>
