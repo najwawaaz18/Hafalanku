@@ -58,7 +58,7 @@
         >
 
         <TextView
-            android:id="@+id/konsultasi_text"
+            android:id="@+id/upload_instruction_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -70,40 +70,82 @@
             android:textStyle="bold"
             android:textAlignment="center"/>
 
+    <LinearLayout
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:id="@+id/layoutPilihSurat"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            >
+
+            <TextView
+                android:id="@+id/pilih_surat_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pilih_surat"
+                android:textColor="@color/blue"
+                android:fontFamily="@font/crimson"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/surat_spinner"
+                android:background="@drawable/bg_spinner_default"
+                android:dropDownVerticalOffset="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/upload_button"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/grey"
             android:textColor="@color/blue"
             app:iconTint="@color/blue"
             android:text="@string/unggah_video"
             android:fontFamily="@font/inter"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:icon="@drawable/video_icon"
             app:cornerRadius="50dp" />
-
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollViewTabel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         app:flow_horizontalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upload_button_container">
+        app:layout_constraintTop_toBottomOf="@id/upload_button_container"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_view_video_siswa"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/upload_button_container"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upload_button_container"
             tools:listitem="@layout/video_list_item_siswa" />
     </ScrollView>
 

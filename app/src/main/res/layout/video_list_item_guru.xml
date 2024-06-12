@@ -1,110 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AboutActivity">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="40dp"
+    android:paddingVertical="20dp">
 
     <ImageView
-        android:id="@+id/logoHafalanKu"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/hafalanku_logo"
+        android:id="@+id/icon_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_delete"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/profile_icon"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/profile_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_nama_siswa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/crimson"
-        android:text="@string/nama_siswa_label"
-        android:textColor="@color/blue"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginStart="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_icon" />
+        app:layout_constraintEnd_toStartOf="@id/content_layout"
+        android:layout_marginEnd="20dp" />
 
     <LinearLayout
-        android:id="@+id/upload_button_container"
-        android:layout_width="wrap_content"
+        android:id="@+id/content_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_list_background"
         android:orientation="vertical"
-        android:paddingHorizontal="30dp"
-        android:layout_marginTop="50dp"
-        app:flow_horizontalAlign="center"
-        app:layout_constraintTop_toBottomOf="@id/text_nama_siswa"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintStart_toEndOf="@id/icon_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.461">
 
         <TextView
-            android:id="@+id/konsultasi_text"
+            android:id="@+id/tv_surat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/unggah_video_text"
-            android:textColor="@color/blue"
             android:fontFamily="@font/crimson"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"/>
+            android:text="@string/surat"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/upload_button"
+        <TextView
+            android:id="@+id/tv_upload_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/grey"
+            android:fontFamily="@font/crimson"
+            android:text="@string/keterangan_waktu_uploadnya"
             android:textColor="@color/blue"
-            app:iconTint="@color/blue"
-            android:text="@string/unggah_video"
-            android:fontFamily="@font/inter"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            app:icon="@drawable/video_icon"
-            app:cornerRadius="50dp" />
-
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollViewTabel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
-        app:flow_horizontalAlign="center"
+    <ImageView
+        android:id="@+id/icon_play"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upload_button_container">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/upload_button_container"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="16dp"
-            tools:listitem="@layout/video_list_item_siswa" />
-    </ScrollView>
-
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

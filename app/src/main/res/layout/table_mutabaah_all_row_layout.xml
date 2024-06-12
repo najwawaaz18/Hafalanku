@@ -8,7 +8,8 @@
 
     <TextView
         android:id="@+id/style_no_row"
-        android:layout_width="40dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/crimson"
@@ -16,11 +17,13 @@
         android:paddingEnd="10dp"
         android:textColor="@color/blue"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/style_nama_row"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
@@ -28,5 +31,6 @@
         android:layout_gravity="center"
         android:fontFamily="@font/crimson"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 </TableRow>

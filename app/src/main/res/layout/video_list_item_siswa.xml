@@ -8,6 +8,8 @@
 
     <ImageView
         android:id="@+id/icon_delete"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_delete"
@@ -52,6 +54,8 @@
 
     <ImageView
         android:id="@+id/icon_upload"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_upload"

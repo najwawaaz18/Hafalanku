@@ -83,7 +83,7 @@ public class MutabaahAllActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Log.d("Clicked UserID", nis);
-                Intent intent = new Intent(MutabaahAllActivity.this, PenilaianIndividuActivity.class);
+                Intent intent = new Intent(MutabaahAllActivity.this, MutabaahVideoActivity.class);
                 intent.putExtra("username", nama);
                 intent.putExtra("userid", nis);
                 startActivity(intent);

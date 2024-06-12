@@ -1,19 +1,27 @@
 package com.example.hafalanku;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,23 +36,91 @@ import com.google.firebase.storage.UploadTask;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class UnggahVideoActivity extends AppCompatActivity {
 
     private static final int PICK_VIDEO_CODE = 1;
     private Button uploadButton;
-
+    Spinner spinnerSurah;
     private FirebaseStorage storage;
     private DatabaseReference databaseReference;
     private String username;
+    private String userid;
     ImageView profileIcon;
+    private RecyclerView videoRecyclerView;
+    private List<VideoItem> videoList;
+    private IndividuVideoAdapter adapter;
+    private TextView nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.unggah_video_page);
+
+        SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        username = preferences.getString("username", "");
+
+        String namaText = "Nama Siswa: " + username;
+        nameTextView = findViewById(R.id.text_nama_siswa);
+        nameTextView.setText(namaText);
+
+        videoRecyclerView = findViewById(R.id.recycler_view_video_siswa);
+        videoList = new ArrayList<>();
+        adapter = new IndividuVideoAdapter(this, videoList);
+        videoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        videoRecyclerView.setAdapter(adapter);
+
+        adapter.setOnDeleteClickListener(new IndividuVideoAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                showDeleteConfirmationDialog(position);
+//                deleteVideo(position);
+            }
+        });
+
+        spinnerSurah = findViewById(R.id.surat_spinner);
+
+        DatabaseReference surahRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Surah");
+
+        surahRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> surahNames = new ArrayList<>();
+                surahNames.add("");
+
+                for (DataSnapshot surahSnapshot : dataSnapshot.getChildren()) {
+                    String namaSurah = surahSnapshot.child("nama_surah").getValue(String.class);
+
+//                    String surahText = namaSurah;
+                    surahNames.add(namaSurah);
+                }
+
+                CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(UnggahVideoActivity.this, R.layout.custom_spinner_item, surahNames, false);
+                spinnerSurah.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+
+        adapter.setOnUploadClickListener(new IndividuVideoAdapter.OnUploadClickListener() {
+            @Override
+            public void onUploadClick(int position) {
+                VideoItem videoItem = videoList.get(position);
+                ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinnerSurah.getAdapter();
+                int positionInSpinner = spinnerAdapter.getPosition(videoItem.getVideoTitle());
+                spinnerSurah.setSelection(positionInSpinner);
+                deleteVideo(position);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_VIDEO_CODE);
+            }
+        });
 
         profileIcon = findViewById(R.id.profile_icon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +130,6 @@ public class UnggahVideoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        username = preferences.getString("username", "");
 
         storage = FirebaseStorage.getInstance("gs://hafalanku-c0546.appspot.com");
         databaseReference = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -70,6 +143,8 @@ public class UnggahVideoActivity extends AppCompatActivity {
                 startActivityForResult(intent, PICK_VIDEO_CODE);
             }
         });
+
+        loadVideosFromFirebase();
     }
 
     @Override
@@ -85,6 +160,38 @@ public class UnggahVideoActivity extends AppCompatActivity {
                 Toast.makeText(UnggahVideoActivity.this, "No video selected!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void loadVideosFromFirebase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app");
+        DatabaseReference videosRef = database.getReference().child("Videos").child(username);
+
+        videosRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                videoList.clear();
+
+                for (DataSnapshot videoSnapshot : dataSnapshot.getChildren()) {
+                    String videoUrl = videoSnapshot.child("video_url").getValue(String.class);
+                    String videoTitle = "Surat " + videoSnapshot.child("nama_surah").getValue(String.class);
+                    String videoUploadTime = videoSnapshot.child("upload_date").getValue(String.class) + ", " + videoSnapshot.child("time_date").getValue(String.class);
+                    VideoItem videoItem = new VideoItem(videoUrl, videoTitle);
+                    videoItem.setVideoId(videoSnapshot.getKey());
+                    videoItem.setUploadTime(videoUploadTime);
+                    videoItem.setVideoUserName(username);
+                    videoList.add(videoItem);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UnggahVideoActivity.this, "Failed to load videos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void uploadVideoToFirebase(Uri videoUri) {
@@ -110,8 +217,10 @@ public class UnggahVideoActivity extends AppCompatActivity {
                         String uploadTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
                         String videoId = generateRandomId();
+                        String selectedSurah = spinnerSurah.getSelectedItem().toString();
 
                         HashMap<String, Object> videoData = new HashMap<>();
+                        videoData.put("nama_surah", selectedSurah);
                         videoData.put("upload_date", uploadDate);
                         videoData.put("time_date", uploadTime);
                         videoData.put("video_url", downloadUrl.toString());
@@ -173,5 +282,45 @@ public class UnggahVideoActivity extends AppCompatActivity {
         return sb.toString();
     }
 
+    private void deleteVideo(int position) {
+        VideoItem videoItem = videoList.get(position);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(videoItem.getVideoUrl());
+
+        storageRef.delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DatabaseReference videoRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app")
+                        .getReference("Videos")
+                        .child(videoItem.getVideoUserName())
+                        .child(videoItem.getVideoId());
+
+                videoRef.removeValue().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+//                        videoList.remove(position);
+//                        adapter.notifyItemRemoved(position);
+                        loadVideosFromFirebase();
+                        Toast.makeText(UnggahVideoActivity.this, "Video berhasil dihapus.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(UnggahVideoActivity.this, "Gagal menghapus video.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(UnggahVideoActivity.this, "Gagal menghapus video.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showDeleteConfirmationDialog(int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Video")
+                .setMessage("Are you sure you want to delete this video?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteVideo(position);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 
 }

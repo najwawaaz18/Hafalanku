@@ -3,15 +3,20 @@ package com.example.hafalanku;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,19 +31,48 @@ import java.util.List;
 
 public class MutabaahVideoActivity extends AppCompatActivity {
 
-    private List<VideoItem> videoList;
-    private VideoAdapter adapter;
     ImageView profileIcon;
+    private String username;
+    private RecyclerView videoRecyclerView;
+    private List<VideoItem> videoList;
+    private GuruIndividuVideoAdapter adapter;
+    private TextView nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mutabaah_video);
+        setContentView(R.layout.mutabaah_individu);
 
-        GridView gridView = findViewById(R.id.gridview);
+        videoRecyclerView = findViewById(R.id.recycler_view_video_guru);
         videoList = new ArrayList<>();
-        adapter = new VideoAdapter(this, videoList);
-        gridView.setAdapter(adapter);
+        adapter = new GuruIndividuVideoAdapter(this, videoList);
+        videoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        videoRecyclerView.setAdapter(adapter);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+
+        String namaText = "Nama Siswa: " + username;
+        nameTextView = findViewById(R.id.text_nama_siswa);
+        nameTextView.setText(namaText);
+
+        adapter.setOnDeleteClickListener(new GuruIndividuVideoAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                showDeleteConfirmationDialog(position);
+//                deleteVideo(position);
+            }
+        });
+
+        adapter.setOnPlayClickListener(new GuruIndividuVideoAdapter.OnPlayClickListener() {
+            @Override
+            public void onPlayClick(int position) {
+                VideoItem videoItem = videoList.get(position);
+                Intent intent = new Intent(MutabaahVideoActivity.this, VideoPlaybackActivity.class);
+                intent.putExtra("video_url", videoItem.getVideoUrl());
+                startActivity(intent);
+            }
+        });
 
         profileIcon = findViewById(R.id.profile_icon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -49,48 +83,53 @@ public class MutabaahVideoActivity extends AppCompatActivity {
             }
         });
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VideoItem videoItem = videoList.get(position);
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                VideoItem videoItem = videoList.get(position);
+//
+//                Intent intent = new Intent(MutabaahVideoActivity.this, VideoPlaybackActivity.class);
+//                intent.putExtra("video_url", videoItem.getVideoUrl());
+//                startActivity(intent);
+//            }
+//        });
 
-                Intent intent = new Intent(MutabaahVideoActivity.this, VideoPlaybackActivity.class);
-                intent.putExtra("video_url", videoItem.getVideoUrl());
-                startActivity(intent);
-            }
-        });
-
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showDeleteConfirmationDialog(position);
-                return true;
-            }
-        });
+//        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                showDeleteConfirmationDialog(position);
+//                return true;
+//            }
+//        });
 
         loadVideosFromFirebase();
     }
 
     private void loadVideosFromFirebase() {
-//        System.out.println("sini loh");
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app");
-        database.getReference("Videos").addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference videosRef = database.getReference().child("Videos").child(username);
+
+        videosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot videoSnapshot : userSnapshot.getChildren()) {
-                        String videoUrl = videoSnapshot.child("video_url").getValue(String.class);
-                        String videoTitle = userSnapshot.getKey();
-                        VideoItem videoItem = new VideoItem(videoUrl, videoTitle);
-                        videoList.add(videoItem);
-                    }
+                videoList.clear();
+                for (DataSnapshot videoSnapshot : dataSnapshot.getChildren()) {
+                    String videoUrl = videoSnapshot.child("video_url").getValue(String.class);
+                    String videoTitle = "Surat " + videoSnapshot.child("nama_surah").getValue(String.class);
+                    String videoUploadTime = videoSnapshot.child("upload_date").getValue(String.class) + ", " + videoSnapshot.child("time_date").getValue(String.class);
+                    VideoItem videoItem = new VideoItem(videoUrl, videoTitle);
+                    videoItem.setVideoId(videoSnapshot.getKey());
+                    videoItem.setUploadTime(videoUploadTime);
+                    videoItem.setVideoUserName(username);
+                    videoList.add(videoItem);
                 }
                 adapter.notifyDataSetChanged();
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //
+                Toast.makeText(MutabaahVideoActivity.this, "Failed to load videos", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,12 +156,12 @@ public class MutabaahVideoActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DatabaseReference videoRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app")
                         .getReference("Videos")
-                        .child(videoItem.getVideoTitle());
+                        .child(videoItem.getVideoUserName())
+                        .child(videoItem.getVideoId());
 
                 videoRef.removeValue().addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
-                        videoList.remove(position);
-                        adapter.notifyDataSetChanged();
+                        loadVideosFromFirebase();
                         Toast.makeText(MutabaahVideoActivity.this, "Video berhasil dihapus.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MutabaahVideoActivity.this, "Gagal menghapus video.", Toast.LENGTH_SHORT).show();
