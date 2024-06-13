@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         String selectedUserType = intent.getStringExtra("USER_TYPE");
         loginSebagai.setText("Login Sebagai " + selectedUserType);
 
-
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app");
 
         Button loginButton = findViewById(R.id.login_button);
@@ -57,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 String userid = useridText.getText().toString();
 
                 if (username.isEmpty() || userid.isEmpty()) {
-                    Log.d("LoginActivity", "Username or userid cannot be empty!");
+                    Toast.makeText(LoginActivity.this, "Username maupun password tidak boleh kosong!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
