@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +25,7 @@ import java.util.Set;
 
 public class SetoranSiswaActivity extends AppCompatActivity {
 
-    Spinner spinnerNama, spinnerSurah, spinnerJuz;
+    Spinner spinnerNama, spinnerSurah;
     Button buttonSelesai;
     String selectedStudentName = "";
     String selectedSurah = "";
@@ -44,15 +45,6 @@ public class SetoranSiswaActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        List<String> juz_lists = new ArrayList<>();
-        juz_lists.add("");
-        juz_lists.add("Juz 29");
-
-        spinnerJuz = findViewById(R.id.juz_spinner);
-
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_item, juz_lists, false);
-        spinnerJuz.setAdapter(adapter);
 
         spinnerNama = findViewById(R.id.student_name_spinner);
 
@@ -136,19 +128,48 @@ public class SetoranSiswaActivity extends AppCompatActivity {
             selectedSurah = spinnerSurah.getSelectedItem().toString();
         }
 
+        checkAndAddHafalan();
+    }
+
+
+    private void checkAndAddHafalan() {
+        if (selectedStudentId.isEmpty() || selectedSurah.isEmpty()) {
+            Toast.makeText(SetoranSiswaActivity.this, "Pilih nama siswa dan surah terlebih dahulu.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference hafalanRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference().child("Hafalan").child(selectedStudentId);
+
+        hafalanRef.child("status_hafalan").child(selectedSurah).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Toast.makeText(SetoranSiswaActivity.this, "Data hafalan sudah ada.", Toast.LENGTH_SHORT).show();
+                } else {
+                    addHafalan(hafalanRef);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
+
+    private void addHafalan(DatabaseReference hafalanRef) {
         String statusHafalan = "Tidak Lulus";
 
-        DatabaseReference hafalanRef = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Hafalan").child(selectedStudentId);
         hafalanRef.child("nama").setValue(selectedStudentName);
         hafalanRef.child("status_hafalan").child(selectedSurah).setValue(statusHafalan);
 
-        Toast toast = Toast.makeText(SetoranSiswaActivity.this, "Berhasil menambahkan data setoran hafalan!", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(SetoranSiswaActivity.this, "Berhasil menambahkan data setoran hafalan!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SetoranSiswaActivity.this, HomeScreenGuruActivity.class);
         startActivity(intent);
 
         Log.d("SelectedValues", "Selected Student Name: " + selectedStudentName);
         Log.d("SelectedValues", "Selected Surah: " + selectedSurah);
-
     }
+
 }

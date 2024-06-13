@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra(USER_TYPE, "Guru");
+                intent.putExtra("USER_TYPE", "Guru");
                 startActivity(intent);
             }
         });
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra(USER_TYPE, "Orangtua");
+                intent.putExtra("USER_TYPE", "Orangtua/Siswa");
                 startActivity(intent);
             }
         });

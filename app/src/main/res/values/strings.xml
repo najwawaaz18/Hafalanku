@@ -81,7 +81,7 @@
     <string name="keterangan">Keterangan</string>
     <string name="status">Status:</string>
     <string name="nama_hint">Nama : </string>
-    <string name="nisn_hint">Nomor Induk :</string>
+    <string name="nisn_hint">Password :</string>
     <string name="edit">EDIT</string>
     <string name="logout">LOGOUT</string>
     <string name="update">UPDATE</string>
@@ -89,4 +89,6 @@
     <string name="text_klik_mutabaah">Klik nama siswa untuk melihat\nvideo hafalan masing-masing</string>
     <string name="keterangan_waktu_uploadnya">keterangan waktu uploadnya</string>
     <string name="surat">Surat ......</string>
+    <string name="login_sebagai">Login Sebagai Guru</string>
+    <string name="input_setoran_hafalan_njuz_29">Input Setoran Hafalan\nJuz 29</string>
 </resources>

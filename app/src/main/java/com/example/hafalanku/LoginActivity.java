@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     EditText usernameText, useridText;
+    TextView loginSebagai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,12 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameText = findViewById(R.id.edit_text);
         useridText = findViewById(R.id.edit_nisn);
+
+        loginSebagai = findViewById(R.id.textLoginSebagai);
+        Intent intent = getIntent();
+        String selectedUserType = intent.getStringExtra("USER_TYPE");
+        loginSebagai.setText("Login Sebagai " + selectedUserType);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hafalanku-c0546-default-rtdb.asia-southeast1.firebasedatabase.app");
 
